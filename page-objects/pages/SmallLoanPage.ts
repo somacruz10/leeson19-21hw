@@ -1,4 +1,4 @@
-import {Locator, Page} from "@playwright/test";
+import {expect, Locator, Page} from "@playwright/test";
 import {Button} from "../atoms/Button";
 import {Input} from "../atoms/Input";
 
@@ -10,11 +10,14 @@ export class SmallLoanPage{
     readonly applyImage1: Button;
     readonly applyImage2: Button;
     readonly amountInput: Input;
+    readonly amountInputError: Locator;
     readonly periodSelect: Locator;
     readonly periodOptions: Locator;
     readonly usernameInput: Input;
     readonly passwordInput: Input;
     readonly continueButton: Button;
+    readonly monthlyAmountSPan: Locator;
+
 
     constructor(page: Page) {
         this.page = page;
@@ -22,12 +25,15 @@ export class SmallLoanPage{
         this.applyImage1 = new Button(page, "id-image-element-button-image-1")
         this.applyImage2 = new Button(page, "id-image-element-button-image-2")
         this.amountInput = new Input(page, "id-small-loan-calculator-field-amount")
+        this.amountInputError = page.getByTestId("id-small-loan-calculator-field-error")
+
         this.periodSelect = page.getByTestId("ib-small-loan-calculator-field-period")
         //this.periodOptions = this.periodSelect.locator("option")
         this.periodOptions = this.periodSelect.locator("option")
         this.usernameInput = new Input(page, "login-popup-username-input")
         this.passwordInput = new Input(page, "login-popup-password-input")
         this.continueButton = new Button(page, "login-popup-continue-button")
+        this.monthlyAmountSPan = page.getByTestId("ib-small-loan-calculator-field-monthlyPayment")
     }
 
     async open(): Promise<void> {
@@ -36,7 +42,25 @@ export class SmallLoanPage{
 
     async getFirstPeriodOption(): Promise<string>{
         const allOptions = await this.periodOptions.all();
-
         return await allOptions[0].innerText();
+    }
+
+    async checkMonthlyAmount(expected: number): Promise<void> {
+        const innerText = await this.monthlyAmountSPan.innerText();
+        const summ = +innerText.split(" ")[0]
+        expect(expected).toEqual(summ);
+    }
+
+    async checkMonthlyAmountErrorText(expected: string): Promise<void> {
+        const innerText = await this.monthlyAmountSPan.innerText();
+        expect(expected).toEqual(innerText);
+
+    }
+
+    async checkMonthlyAmountUndefined(expected: string): Promise<void> {
+        const innerText = await this.monthlyAmountSPan.innerText();
+        const undefinedText = innerText.split(" ")[0]
+        expect(expected).toEqual(undefinedText);
+
     }
 }

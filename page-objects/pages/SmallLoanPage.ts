@@ -57,7 +57,7 @@ export class SmallLoanPage {
   }
 
   async checkMonthlyAmountErrorText(expected: string): Promise<void> {
-    const innerText = await this.monthlyAmountSPan.innerText();
+    const innerText = await this.amountInputError.innerText();
     expect(expected).toEqual(innerText);
   }
 

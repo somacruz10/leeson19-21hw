@@ -19,4 +19,39 @@ test.describe("Loan app tests", async () => {
     expect(finalAmount).toEqual(prefilledAmount);
     expect(finalPeriod).toEqual(prefilledPeriod);
   });
+
+  test("TL-20-2 test scrolling", async ({ page }) => {
+    const smallLoanPage = new SmallLoanPage(page);
+    await smallLoanPage.open();
+
+    await smallLoanPage.scrollButton1.scrollIntoViewIfNeeded();
+    await expect(smallLoanPage.scrollButton1.buttonLocator).toBeInViewport();
+    await smallLoanPage.scrollButton1.click();
+    await expect(smallLoanPage.scrollButton1.buttonLocator).toBeInViewport();
+    await smallLoanPage.scrollButton2.scrollIntoViewIfNeeded();
+    await expect(smallLoanPage.scrollButton2.buttonLocator).toBeInViewport();
+    await smallLoanPage.scrollButton2.click();
+    await expect(smallLoanPage.scrollButton2.buttonLocator).toBeInViewport();
+  });
+
+  test("TL-20-3 Slider Test", async ({ page }) => {
+    const smallLoanPage = new SmallLoanPage(page);
+    await smallLoanPage.open();
+
+    await smallLoanPage.sliderAmount.focus();
+    for (let i = 0; i < 5; i++) {
+      await smallLoanPage.sliderAmount.press("ArrowRight");
+    }
+
+    const inputValue = await smallLoanPage.amountInput.getCurrentValue();
+    expect(inputValue).toEqual("505");
+
+    await smallLoanPage.sliderPeriod.focus();
+    for (let i = 0; i < 2; i++) {
+      await smallLoanPage.sliderPeriod.press("ArrowRight");
+    }
+
+    const periodValue = await smallLoanPage.sliderPeriod.inputValue();
+    expect(periodValue).toEqual("20");
+  });
 });

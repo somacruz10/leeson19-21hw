@@ -17,6 +17,10 @@ export class SmallLoanPage {
   readonly passwordInput: Input;
   readonly continueButton: Button;
   readonly monthlyAmountSPan: Locator;
+  readonly scrollButton1: Button;
+  readonly scrollButton2: Button;
+  readonly sliderAmount: Locator;
+  readonly sliderPeriod: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -27,7 +31,6 @@ export class SmallLoanPage {
     this.amountInputError = page.getByTestId(
       "id-small-loan-calculator-field-error",
     );
-
     this.periodSelect = page.getByTestId(
       "ib-small-loan-calculator-field-period",
     );
@@ -39,6 +42,14 @@ export class SmallLoanPage {
     this.monthlyAmountSPan = page.getByTestId(
       "ib-small-loan-calculator-field-monthlyPayment",
     );
+    this.scrollButton1 = new Button(page, "id-image-element-button-image-1");
+    this.scrollButton2 = new Button(page, "id-image-element-button-image-2");
+    this.sliderAmount = page.getByTestId(
+      "id-small-loan-calculator-field-amount-slider",
+    );
+    this.sliderPeriod = page.getByTestId(
+      "ib-small-loan-calculator-field-period-slider",
+    );
   }
 
   async open(): Promise<void> {
@@ -48,6 +59,11 @@ export class SmallLoanPage {
   async getFirstPeriodOption(): Promise<string> {
     const allOptions = await this.periodOptions.all();
     return await allOptions[0].innerText();
+  }
+
+  async thirdFirstPeriodOption(): Promise<string> {
+    const allOptions = await this.periodOptions.all();
+    return await allOptions[2].innerText();
   }
 
   async checkMonthlyAmount(expected: number): Promise<void> {

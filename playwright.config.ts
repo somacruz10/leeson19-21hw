@@ -36,7 +36,7 @@ export default defineConfig({
   projects: [
     {
       name: "mobile-chromium",
-      use: { ...devices["Pixel 7"] },
+      use: { ...devices["Galaxy Note 9"] },
     },
 
     {

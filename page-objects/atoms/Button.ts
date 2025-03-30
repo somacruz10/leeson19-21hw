@@ -16,4 +16,16 @@ export class Button {
   async click(): Promise<void> {
     await this.button.click();
   }
+
+  async hover(): Promise<void> {
+    await this.button.click();
+  }
+
+  async scrollIntoViewIfNeeded() {
+    await this.button.scrollIntoViewIfNeeded();
+  }
+
+  get buttonLocator() {
+    return this.button;
+  }
 }

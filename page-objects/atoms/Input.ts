@@ -20,4 +20,10 @@ export class Input {
   async getCurrentValue(): Promise<string> {
     return await this.input.inputValue();
   }
+
+  get inputLocator() {
+    return this.input;
+  }
+
 }
+

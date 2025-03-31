@@ -25,13 +25,11 @@ test.describe("Loan app tests", async () => {
     await smallLoanPage.open();
 
     await smallLoanPage.scrollButton1.scrollIntoViewIfNeeded();
-    await expect(smallLoanPage.scrollButton1.buttonLocator).toBeInViewport();
     await smallLoanPage.scrollButton1.click();
-    await expect(smallLoanPage.scrollButton1.buttonLocator).toBeInViewport();
+    await expect(smallLoanPage.amountInput.inputLocator).toBeInViewport();
     await smallLoanPage.scrollButton2.scrollIntoViewIfNeeded();
-    await expect(smallLoanPage.scrollButton2.buttonLocator).toBeInViewport();
     await smallLoanPage.scrollButton2.click();
-    await expect(smallLoanPage.scrollButton2.buttonLocator).toBeInViewport();
+    await expect(smallLoanPage.periodSelect).toBeInViewport();
   });
 
   test("TL-20-3 Slider Test", async ({ page }) => {
